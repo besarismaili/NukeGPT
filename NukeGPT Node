@@ -1,0 +1,23 @@
+set cut_paste_input [stack 0]
+version 13.1 v2
+push $cut_paste_input
+NoOp {
+ name NukeGPT
+ tile_color 0x14a07aff
+ selected true
+ xpos 18
+ ypos -10
+ addUserKnob {20 User}
+ addUserKnob {26 lg l "" +STARTLINE T "<p  style=\"color:#e9b443;font-weight:bold;font-size:24px;\">NUKE<span style=\"color:#15a085;\">GPT</span></p>"}
+ addUserKnob {26 ""}
+ addUserKnob {43 txt l Prompt}
+ txt "Create 3 blur nodes"
+ addUserKnob {22 run_script l "<span style=\"color:#15a085;font-size:12px;\">Run it</span>" T "def script():\n    import requests\n    import json\n    import os\n    import nuke\n\n\n    node = nuke.thisNode()\n\n\n    api_endpoint = 'https://api.openai.com/v1/engines/text-davinci-002/completions'\n    api_key = node\[\"API key\"].value()\n\n\n\n    txt_value = node\[\"txt\"].value()\n    prompt = \"Generate a python script in Nuke that will \" + node\[\"txt\"].value() + \"\\nAlways follow the following rules:\\n1- Don't use the import statement\\n2- Only generate executable code\\n3- Make sure the code don't have incorrect indents or extra spaces\\n4- Keep the comments on the code short under 10 words\"\n    print(prompt)\n    headers = \{\n        'Content-Type': 'application/json',\n        'Authorization': f'Bearer \{api_key\}'\n    \}\n    data = \{\n        \"model\": \"text-davinci-003\",\n        \"prompt\": prompt,\n        \"temperature\": 0.7,\n        \"max_tokens\": 2048,\n        \"top_p\": 1,\n        \"frequency_penalty\": 0,\n        \"presence_penalty\": 0,\n    \}\n    response = requests.post(\n        \"https://api.openai.com/v1/completions\",\n        headers=headers,\n        data=json.dumps(data),\n    )\n    response_text = response.text\n    response_json = json.loads(response_text)\n\n\n    print(response_json)\n    aicode = response_json\[\"choices\"]\[0]\[\"text\"].strip()\n\n\n    print(aicode)\n    node\[\"code\"].setValue(aicode)\n    exec(aicode)\nscript()" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {20 pyscr l "Python Script" n 1}
+ addUserKnob {43 code l Code}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 credit l "" +STARTLINE T "<span  style=\"color:#e9b443;font-weight:bold;font-size:8pt;\">NUKE<span style=\"color:#15a085;\">GPT</span></span><span style=\"color:#aaa;font-family:sans-serif;font-size:8pt\"> - Version 1.0 - 2023 - <a href=\"https://github.com/besarismaili/NukeGPT\" style=\"color:#aaa\">Github Page</a></span>\n\n<p><a href=\"https://www.linkedin.com/in/besarismaili/\" style=\"color:#aaa\">Besar Ismaili</a> </p>"}
+ addUserKnob {20 API}
+ addUserKnob {1 "API key"}
+}
