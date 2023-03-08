@@ -4,6 +4,28 @@ NukeGPT is a simple Nuke toolset that allows you to generate code using OpenAI's
 
 ## **Getting Started**
 
+## **Installing Python and Requests module**
+
+1. Go to the official Python website and download the latest version of Python: **[https://www.python.org/downloads/](https://www.python.org/downloads/)**
+2. Run the Python installer and follow the installation wizard to install Python on your system. Make sure to select the option to add Python to your system PATH during installation.
+3. Open a command prompt or terminal and type the following command to install the Requests module: **`pip install requests`**
+4. Wait for the installation to complete.
+
+## **Adding the Python path to init.py file**
+
+1. Under the path  **`C:\Users\{USER}\.nuke`,**  **`{USER}`** is your Windows username.
+2. Open the file called **`init.py`**  in a text editor.
+3. Type the following line in the **`init.py`** file, replacing the path with the path to your Python executable, mine looks like this:
+    
+    ```
+    nuke.pluginAddPath("C:/Users/{USER}/AppData/Local/Programs/Python/Python311/Lib/site-packages")
+    ```
+    
+4. Save the **`init.py`** 
+5. Close and reopen Nuke for the changes to take effect.
+
+That's it! You should now be able to use the Requests module in Nuke. If you encounter any issues, make sure to double-check the paths in the **`init.py`** file and the path your Python modules are installed.
+
 ### **Creating an OpenAI Account**
 
 Before you can start using NukeGPT, you need to create an account with OpenAI and obtain an API key. Here's how to do it:
